@@ -1,15 +1,24 @@
 import axios from 'axios';
-import { NotesHttpResponse, type CreateNote, type Note } from '../types/note';
+import {
+  NotesHttpResponse,
+  registerRequest,
+  User,
+  type CreateNote,
+  type Note,
+} from '../types/note';
 
-const myKey = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+const myKey = process.env.NEXT_PUBLIC_API_URL;
 if (!myKey) {
   throw new Error(
-    'Environment variable NEXT_PUBLIC_NOTEHUB_TOKEN is not defined. Please ensure it is set.'
+    'Environment variable NEXT_PUBLIC_API_URL is not defined. Please ensure it is set.'
   );
 }
 
-axios.defaults.baseURL = 'https://notehub-public.goit.study/api';
-axios.defaults.headers.common['Authorization'] = `Bearer ${myKey}`;
+const nextServer = axios.create({
+  baseURL: 'http://localhost:3000/api',
+  withCredentials: true,
+  headers: { Authorization: `Bearer ${myKey}` },
+});
 
 interface fetchNotesProps {
   page: number;
@@ -25,7 +34,7 @@ export const fetchNotes = async ({
   tag,
 }: fetchNotesProps): Promise<NotesHttpResponse> => {
   try {
-    const { data } = await axios.get<NotesHttpResponse>('/notes', {
+    const { data } = await nextServer.get<NotesHttpResponse>('/notes', {
       params: {
         page,
         perPage,
@@ -41,7 +50,7 @@ export const fetchNotes = async ({
 
 export const createNote = async (noteData: CreateNote): Promise<Note> => {
   try {
-    const { data } = await axios.post<Note>('/notes', noteData);
+    const { data } = await nextServer.post<Note>('/notes', noteData);
     return data;
   } catch {
     throw new Error(
@@ -52,7 +61,7 @@ export const createNote = async (noteData: CreateNote): Promise<Note> => {
 
 export const deleteNote = async (noteId: number): Promise<Note> => {
   try {
-    const { data } = await axios.delete<Note>(`/notes/${noteId}`);
+    const { data } = await nextServer.delete<Note>(`/notes/${noteId}`);
     return data;
   } catch {
     throw new Error(
@@ -63,9 +72,18 @@ export const deleteNote = async (noteId: number): Promise<Note> => {
 
 export const fetchNoteById = async (id: number): Promise<Note> => {
   try {
-    const { data } = await axios.get<Note>(`/notes/${id}`);
+    const { data } = await nextServer.get<Note>(`/notes/${id}`);
     return data;
   } catch {
     throw new Error('Unable to retrieve note. It might not exist.');
+  }
+};
+
+export const register = async (dataUser: registerRequest): Promise<User> => {
+  try {
+    const { data } = await nextServer.post<User>('/auth/register', dataUser);
+    return data;
+  } catch {
+    throw new Error('Unable to register user. Please try again.');
   }
 };
