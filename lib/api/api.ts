@@ -1,23 +1,20 @@
 import axios from 'axios';
 import {
   NotesHttpResponse,
-  registerRequest,
-  User,
   type CreateNote,
   type Note,
-} from '../types/note';
+} from '../../types/note';
 
-const myKey = process.env.NEXT_PUBLIC_API_URL;
+const myKey = process.env.NEXT_PUBLIC_API_URL + '/api';
 if (!myKey) {
   throw new Error(
     'Environment variable NEXT_PUBLIC_API_URL is not defined. Please ensure it is set.'
   );
 }
 
-const nextServer = axios.create({
-  baseURL: 'http://localhost:3000/api',
+export const nextServer = axios.create({
+  baseURL: myKey,
   withCredentials: true,
-  headers: { Authorization: `Bearer ${myKey}` },
 });
 
 interface fetchNotesProps {
@@ -76,14 +73,5 @@ export const fetchNoteById = async (id: number): Promise<Note> => {
     return data;
   } catch {
     throw new Error('Unable to retrieve note. It might not exist.');
-  }
-};
-
-export const register = async (dataUser: registerRequest): Promise<User> => {
-  try {
-    const { data } = await nextServer.post<User>('/auth/register', dataUser);
-    return data;
-  } catch {
-    throw new Error('Unable to register user. Please try again.');
   }
 };

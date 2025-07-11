@@ -1,9 +1,9 @@
 'use client';
 
-import { registerRequest } from '@/types/note';
 import css from './page.module.css';
 import { useRouter } from 'next/router';
-import { register } from '@/lib/api';
+import { registerRequest } from '@/types/user';
+import { register } from '@/lib/api/clientApi';
 
 const SignUp = () => {
   const router = useRouter();
