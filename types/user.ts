@@ -3,7 +3,7 @@ export interface User {
   password: string;
   avatar?: string;
 }
-export interface registerRequest {
+export interface userRequest {
   email: string;
   password: string;
 }
