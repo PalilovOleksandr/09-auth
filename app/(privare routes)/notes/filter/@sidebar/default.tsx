@@ -3,7 +3,18 @@ import css from './SidebarNotes.module.css';
 import Link from 'next/link';
 
 const SidebarNotes = ({
-  tags = ['Work', 'Personal', 'Meeting', 'Shopping', 'Todo'],
+  tags = [
+    'Work',
+    'Personal',
+    'Meeting',
+    'Shopping',
+    'Ideas',
+    'Travel',
+    'Finance',
+    'Health',
+    'Important',
+    'Todo',
+  ],
 }: TagsProps) => {
   return (
     <ul className={css.menuList}>

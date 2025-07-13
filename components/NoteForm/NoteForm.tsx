@@ -2,13 +2,14 @@
 
 import css from './NoteForm.module.css';
 import type { CreateNote, Tags } from '../../types/note';
-import { createNote } from '../../lib/api/api';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ErrorText from '../ErrorMessage/ErrorMessage';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useNoteDraftStore } from '@/lib/store/noteStore';
 import React from 'react';
+import { createNote } from '@/lib/api/clientApi';
 
 // const NoteSchema = Yup.object().shape({
 //     title: Yup.string().min(3, "Min. of 3 symbols").max(50, "Max. characters 50").required("Title is required"),
@@ -94,11 +95,16 @@ export default function NoteForm() {
           defaultValue={draft?.tag}
           onChange={handleChange}
         >
-          <option value="Todo">Todo</option>
-          <option value="Work">Work</option>
-          <option value="Personal">Personal</option>
-          <option value="Meeting">Meeting</option>
-          <option value="Shopping">Shopping</option>
+          <option value="Todo">Work</option>
+          <option value="Work">Personal</option>
+          <option value="Personal">Meeting</option>
+          <option value="Meeting">Shopping</option>
+          <option value="Shopping">Ideas</option>
+          <option value="Shopping">Travel</option>
+          <option value="Shopping">Finance</option>
+          <option value="Shopping">Health</option>
+          <option value="Shopping">Important</option>
+          <option value="Shopping">Todo</option>
         </select>
       </div>
 

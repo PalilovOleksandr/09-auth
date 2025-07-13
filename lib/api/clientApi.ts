@@ -1,13 +1,12 @@
-import { userRequest, User } from '@/types/user';
+import { userRequest, User, EditUser } from '@/types/user';
 import { nextServer } from './api';
-import { CreateNote, Note, NotesHttpResponse } from '@/types/note';
+import {
+  CreateNote,
+  fetchNotesProps,
+  Note,
+  NotesHttpResponse,
+} from '@/types/note';
 import { CheckSessionRequest } from '@/types/servers';
-interface fetchNotesProps {
-  page: number;
-  perPage?: number;
-  searchQuery?: string;
-  tag?: string;
-}
 
 export const fetchNotes = async ({
   page,
@@ -52,7 +51,7 @@ export const deleteNote = async (noteId: number): Promise<Note> => {
   }
 };
 
-export const fetchNoteById = async (id: number): Promise<Note> => {
+export const fetchNoteById = async (id: string): Promise<Note> => {
   try {
     const { data } = await nextServer.get<Note>(`/notes/${id}`);
     return data;
@@ -85,6 +84,11 @@ export const checkSession = async (): Promise<boolean> => {
 
 export const getMe = async (): Promise<User> => {
   const { data } = await nextServer.get<User>('/users/me');
+  return data;
+};
+
+export const updateMe = async (payload: EditUser): Promise<User> => {
+  const { data } = await nextServer.patch<User>('/users/me', payload);
   return data;
 };
 

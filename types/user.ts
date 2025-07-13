@@ -7,3 +7,7 @@ export interface userRequest {
   email: string;
   password: string;
 }
+
+export interface EditUser {
+  username: string;
+}

@@ -33,3 +33,10 @@ export interface NotesHttpResponse {
 export interface TagsProps {
   tags: Tags[];
 }
+
+export interface fetchNotesProps {
+  page: number;
+  perPage?: number;
+  searchQuery?: string;
+  tag?: string;
+}
