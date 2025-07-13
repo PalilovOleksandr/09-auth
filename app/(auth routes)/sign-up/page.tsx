@@ -2,13 +2,15 @@
 
 import css from './page.module.css';
 import { userRequest } from '@/types/user';
-import { register } from '@/lib/api/clientApi';
+import { signUp } from '@/lib/api/clientApi';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useAuthStore } from '@/lib/store/authStore';
 
 const SignUp = () => {
   const router = useRouter();
   const [error, setError] = useState<string>('');
+  const setUser = useAuthStore(state => state.setUser);
   const handleSubmit = async (formData: FormData) => {
     try {
       const registerUser = Object.fromEntries(formData);
@@ -16,8 +18,9 @@ const SignUp = () => {
         email: registerUser.email as string,
         password: registerUser.password as string,
       };
-      const response = await register(data);
+      const response = await signUp(data);
       if (response) {
+        setUser(response);
         router.push('/profile');
       } else {
         setError('Invalid email or password');

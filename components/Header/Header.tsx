@@ -17,7 +17,18 @@ const Header = () => {
           <AuthNavigation />
           <li>
             <TagsMenu
-              tags={['Work', 'Personal', 'Meeting', 'Shopping', 'Todo']}
+              tags={[
+                'Work',
+                'Personal',
+                'Meeting',
+                'Shopping',
+                'Ideas',
+                'Travel',
+                'Finance',
+                'Health',
+                'Important',
+                'Todo',
+              ]}
             />
           </li>
         </ul>

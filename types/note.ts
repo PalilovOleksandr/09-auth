@@ -1,4 +1,14 @@
-export type Tags = 'Work' | 'Personal' | 'Meeting' | 'Shopping' | 'Todo';
+export type Tags =
+  | 'Work'
+  | 'Personal'
+  | 'Meeting'
+  | 'Shopping'
+  | 'Ideas'
+  | 'Travel'
+  | 'Finance'
+  | 'Health'
+  | 'Important'
+  | 'Todo';
 
 export interface Note {
   id: number;

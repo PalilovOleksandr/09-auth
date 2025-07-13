@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import css from './page.module.css';
 import { Metadata } from 'next';
+import { getServerMe } from '@/lib/api/serverApi';
 
 export const metadata: Metadata = {
   title: 'Profile',
@@ -23,6 +24,8 @@ export const metadata: Metadata = {
 };
 
 const Profile = async () => {
+  const user = await getServerMe();
+
   return (
     <main className={css.mainContent}>
       <div className={css.profileCard}>
@@ -40,8 +43,8 @@ const Profile = async () => {
           />
         </div>
         <div className={css.profileInfo}>
-          <p>Username: your_username</p>
-          <p>Email: your_email@example.com</p>
+          <p>Username: {user.username}</p>
+          <p>Email: {user.email}</p>
         </div>
       </div>
     </main>

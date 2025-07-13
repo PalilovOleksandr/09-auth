@@ -1,6 +1,7 @@
 import { userRequest, User } from '@/types/user';
 import { nextServer } from './api';
 import { CreateNote, Note, NotesHttpResponse } from '@/types/note';
+import { CheckSessionRequest } from '@/types/servers';
 interface fetchNotesProps {
   page: number;
   perPage?: number;
@@ -60,7 +61,7 @@ export const fetchNoteById = async (id: number): Promise<Note> => {
   }
 };
 
-export const register = async (dataUser: userRequest): Promise<User> => {
+export const signUp = async (dataUser: userRequest): Promise<User> => {
   try {
     const { data } = await nextServer.post<User>('/auth/register', dataUser);
     return data;
@@ -69,11 +70,24 @@ export const register = async (dataUser: userRequest): Promise<User> => {
   }
 };
 
-export const login = async (dataUser: userRequest): Promise<User> => {
+export const signIn = async (dataUser: userRequest): Promise<User> => {
   try {
     const { data } = await nextServer.post<User>('/auth/login', dataUser);
     return data;
   } catch {
     throw new Error('Unable to login user. Please try again.');
   }
+};
+export const checkSession = async (): Promise<boolean> => {
+  const { data } = await nextServer.get<CheckSessionRequest>('/auth/session');
+  return data.success;
+};
+
+export const getMe = async (): Promise<User> => {
+  const { data } = await nextServer.get<User>('/users/me');
+  return data;
+};
+
+export const logout = async (): Promise<void> => {
+  await nextServer.post('/auth/logout');
 };
